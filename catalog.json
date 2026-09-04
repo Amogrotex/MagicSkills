@@ -1,0 +1,57 @@
+{
+  "name": "magicskills",
+  "version": "1.0.0",
+  "description": "Link-loadable step-by-step intelligence skills for any AI (debug, test, think, plan, review, refactor, research).",
+  "loader": "LOADER.md",
+  "index": "INDEX.md",
+  "skills": [
+    {
+      "id": "think",
+      "path": "skills/think/SKILL.md",
+      "title": "Structured thinking",
+      "triggers": ["ambiguous", "tradeoff", "decide", "approach", "strategy"]
+    },
+    {
+      "id": "debug",
+      "path": "skills/debug/SKILL.md",
+      "title": "Root-cause debugging",
+      "triggers": ["bug", "error", "crash", "500", "not working", "regression", "stack trace"]
+    },
+    {
+      "id": "test",
+      "path": "skills/test/SKILL.md",
+      "title": "Test design & verification",
+      "triggers": ["test", "coverage", "verify", "regression test", "edge case"]
+    },
+    {
+      "id": "plan",
+      "path": "skills/plan/SKILL.md",
+      "title": "Execution planning",
+      "triggers": ["plan", "roadmap", "implement feature", "milestone", "scope"]
+    },
+    {
+      "id": "review",
+      "path": "skills/review/SKILL.md",
+      "title": "Code & design review",
+      "triggers": ["review", "PR", "feedback", "LGTM", "any issues"]
+    },
+    {
+      "id": "refactor",
+      "path": "skills/refactor/SKILL.md",
+      "title": "Safe refactoring",
+      "triggers": ["refactor", "clean up", "simplify", "extract", "restructure"]
+    },
+    {
+      "id": "research",
+      "path": "skills/research/SKILL.md",
+      "title": "Sourced research",
+      "triggers": ["compare", "best practice", "what is", "options", "documentation"]
+    }
+  ],
+  "defaultChains": {
+    "broken": ["think", "debug", "test"],
+    "build": ["think", "plan", "test", "review"],
+    "cleanup": ["refactor", "test"],
+    "learn": ["research", "think", "plan"]
+  }
+}
