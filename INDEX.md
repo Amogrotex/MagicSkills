@@ -1,42 +1,42 @@
 # MagicSkills Index
 
-Catalog of skills. The loader picks from this list when the human does not name a skill.
+Pick a skill — or use **ANIZ** to run the full pipeline.
 
-| Skill | Path | Use when | Boosts |
-|-------|------|----------|--------|
-| **think** | `skills/think/SKILL.md` | Ambiguous goals, hard tradeoffs, need structured reasoning first | Clarity, assumptions, decision quality |
-| **debug** | `skills/debug/SKILL.md` | Errors, wrong behavior, flaky systems, “it broke” | Root cause, evidence, minimal fix |
-| **test** | `skills/test/SKILL.md` | Need coverage, reproduce bugs, verify a fix, design cases | Confidence, edge cases, regression safety |
-| **plan** | `skills/plan/SKILL.md` | Multi-step work, features, migrations, unknown scope | Ordering, risks, milestones |
-| **review** | `skills/review/SKILL.md` | PR/code/design critique, “is this safe/good?” | Defects, maintainability, security |
-| **refactor** | `skills/refactor/SKILL.md` | Messy code that still works; improve structure | Clarity, no behavior change |
-| **research** | `skills/research/SKILL.md` | Unknown APIs, options comparison, “what’s best practice?” | Sources, tradeoffs, recommendations |
+| Skill | Path | Use when |
+|-------|------|----------|
+| **ANIZ** (all-in-one) | `skills/aniz/SKILL.md` | Default. Complex goals. “Do everything.” Unsure which skill. |
+| **Research** | `skills/research/SKILL.md` | Facts, options, best practices, comparisons with sources |
+| **Coding** | `skills/coding/SKILL.md` | Write, change, or generate code properly |
+| **Cyber Security** | `skills/cyber-security/SKILL.md` | Threats, hardening, secure design (defensive) |
+| **Scanning** | `skills/scanning/SKILL.md` | Checklist pass over code, config, deps, surfaces |
+| **Issues Founder** | `skills/issues-founder/SKILL.md` | Discover, triage, and write clear issue reports |
+| **Thinking** | `skills/thinking/SKILL.md` | Hard decisions, clarity, tradeoffs before action |
+| **Debugger** | `skills/debugger/SKILL.md` | Bugs, errors, wrong behavior, root cause |
+| **Deep Search** | `skills/deep-search/SKILL.md` | Exhaustive search when normal research isn’t enough |
 
-## Auto-pick rules
+## Auto-pick
 
-Match the **strongest** signal in the human message:
+1. “ANIZ” / “all in one” / multi-part mission / no skill named → **ANIZ**
+2. stack trace / bug / broken / error → **Debugger**
+3. write code / implement / build feature / fix code → **Coding**
+4. vulnerability / harden / OWASP / auth / secure → **Cyber Security**
+5. scan / audit pass / checklist / inventory surfaces → **Scanning**
+6. find bugs/issues / triage / ticket them → **Issues Founder**
+7. “search everything” / obscure topic / leave no stone → **Deep Search**
+8. compare / what is / best way / sources → **Research**
+9. vague / decide / tradeoff / strategy → **Thinking**
 
-1. stack trace / error / “not working” / bug → **debug** (prefix **think** if cause space is huge)
-2. “write tests” / “how do we verify” / coverage → **test**
-3. “how should we approach” / roadmap / epic → **plan** (prefix **think**)
-4. “review this” / “any issues?” → **review**
-5. “clean up” / “simplify” / “refactor” → **refactor**
-6. “compare” / “what is X” / “best way to” (external knowledge) → **research**
-7. vague / strategic / conflicting goals → **think** first
-
-If two skills tie, prefer the chain in `LOADER.md` §4.
-
-## Chains (copy-paste)
+## Suggested chains
 
 ```
-Chain: think → debug → test
-Chain: think → plan → test → review
-Chain: research → think → plan
-Chain: refactor → test
-Chain: debug → test → review
+ANIZ
+Thinking → Research → Coding
+Deep Search → Research → Thinking
+Debugger → Coding → Scanning
+Scanning → Cyber Security → Issues Founder
+Coding → Issues Founder → Scanning
 ```
 
 ## Version
 
-- Pack version: `1.0.0`
-- Skill files are the source of truth; this index is the map only.
+Pack `2.0.0` — skills listed above are the source of truth.

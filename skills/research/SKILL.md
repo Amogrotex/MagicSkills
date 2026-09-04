@@ -1,20 +1,19 @@
-# Skill: research
+# Skill: Research
 
-> Gather and compare knowledge with sources — then recommend with tradeoffs.
+> Structured fact-finding — clear question, credible sources, comparison, recommendation.
 
-**Version:** 1.0.0  
-**Chain well with:** think, plan, review
+**Version:** 2.0.0  
+**Chain well with:** Deep Search, Thinking, Coding, ANIZ
 
 ---
 
 ## When to use
 
-- “What’s the best way to…?”
-- Unknown library/API/protocol
-- Compare options (vendors, patterns, algorithms)
-- Need current best practices or docs
+- “What is X?”, “best way to…”, “compare A vs B”
+- Need docs, patterns, APIs, ecosystem facts
+- Decision needs evidence, not vibes
 
-**Do not use when:** the answer is fully contained in code the human already pasted (just read it) or the task is pure debugging of their system (**debug**).
+**Do not use when:** pure debugging of the human’s own code (→ Debugger) or they asked for exhaustive multi-angle hunt (→ Deep Search).
 
 ---
 
@@ -22,58 +21,57 @@
 
 | Input | Required | Description |
 |-------|----------|-------------|
-| Question | yes | What decision or understanding is needed |
-| Context | no | Stack, constraints, scale |
-| Must-consider | no | Options already on the table |
-| Freshness | no | “Must be 2024+”, etc. |
+| Question | yes | What must be answered |
+| Context | no | Stack, scale, constraints |
+| Options on table | no | A/B already considered |
+| Freshness | no | e.g. prefer current docs |
 
 ---
 
 ## Process
 
-### Step 1 — Frame the question
+### Step 1 — Frame
 
-- Decision to be made **or** understanding needed.
-- Success criteria for a good answer.
-- Constraints that kill options early.
+- Decision or understanding needed
+- Success criteria for a good answer
+- Constraints that kill options early
 
 **Output of step:** framed question + criteria + constraints.
 
-### Step 2 — Search plan
+### Step 2 — Research plan
 
-- Sub-questions to answer.
-- Sources to prefer (official docs, RFCs, primaries > blogs).
-- What you will ignore (SEO spam, undated posts when freshness matters).
+- Sub-questions (3–7)
+- Source preference: official docs, specs, primary data > random blogs
+- What to ignore (undated SEO spam when freshness matters)
 
 **Output of step:** sub-questions + source plan.
 
-### Step 3 — Gather findings
+### Step 3 — Gather
 
-- For each sub-question: short facts with source attribution.
-- Note dates / versions when relevant.
-- Flag uncertainty and conflicts between sources.
+- Facts per sub-question with attribution
+- Note version/date when relevant
+- Flag conflicts between sources
 
-**Output of step:** findings bullets with sources (title + URL or doc name).
+**Output of step:** findings with sources (no fake URLs).
 
-### Step 4 — Compare options
+### Step 4 — Compare
 
-| Option | Fits criteria? | Pros | Cons | When to pick |
-|--------|----------------|------|------|--------------|
+| Option | Fit to criteria | Pros | Cons | Best when |
 
 **Output of step:** comparison table.
 
 ### Step 5 — Recommend
 
-- One primary recommendation + conditions.
-- Runner-up.
-- What to validate next in *their* environment (spike).
+- Primary pick + conditions
+- Runner-up
+- What to validate in *their* environment (spike)
 
 **Output of step:** recommendation block.
 
-### Step 6 — Open gaps
+### Step 6 — Gaps
 
-- What is still unknown.
-- What would change the recommendation.
+- Still unknown
+- What would flip the recommendation
 
 **Output of step:** gaps + revisit triggers.
 
@@ -117,23 +115,15 @@
 
 ## Quality bar
 
-- [ ] Recommendation tied to stated criteria
-- [ ] At least one credible source per major claim when external knowledge is used
-- [ ] Conflicts between sources acknowledged
-- [ ] No fake citations or invented URLs
+- [ ] Tied to criteria
+- [ ] Real sources for external claims
+- [ ] Conflicts acknowledged
+- [ ] No invented citations
 
 ---
 
 ## Anti-patterns
 
-- Dumping links without a decision
-- Outdated advice presented as current
-- “It depends” with no decision framework
-- Ignoring the human’s constraints
-
----
-
-## Example (miniature)
-
-**Question:** Queue for 10k jobs/min on Node — Redis Streams vs RabbitMQ vs SQS?  
-**Recommendation shape:** SQS if already on AWS and ops simplicity > fancy routing; else Rabbit for complex routing; Streams if Redis already core and team is strong on it.
+- Link dump, no decision
+- Outdated advice as current
+- “It depends” with no framework

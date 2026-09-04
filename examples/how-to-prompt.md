@@ -1,55 +1,78 @@
 # How to prompt MagicSkills
 
-## Minimal
+## ANIZ (all in one)
 
 ```
-Follow https://raw.githubusercontent.com/YOU/magicskills/main/skills/think/SKILL.md
+Follow https://raw.githubusercontent.com/YOU/magicskills/main/LOADER.md
+Run ANIZ: https://raw.githubusercontent.com/YOU/magicskills/main/skills/aniz/SKILL.md
 
-Task: We need to cut API p99 latency 30% without a rewrite.
+Mission: Build a small URL shortener API in Node, then scan it for issues.
+Mode: full
 ```
 
-## With loader (best)
+## Single skills
 
+### Thinking
 ```
-Read https://raw.githubusercontent.com/YOU/magicskills/main/LOADER.md
-then use the index to pick skills:
-https://raw.githubusercontent.com/YOU/magicskills/main/INDEX.md
-
-Request: Checkout 500s when coupons apply. Here's the stack trace: ...
+https://raw.githubusercontent.com/YOU/magicskills/main/skills/thinking/SKILL.md
+Should we use monorepo or polyrepo for 3 services and 2 mobile apps?
 ```
 
-## Chain explicitly
+### Research
+```
+https://raw.githubusercontent.com/YOU/magicskills/main/skills/research/SKILL.md
+Compare Postgres vs SQLite for a single-node SaaS MVP under 10k users.
+```
+
+### Deep Search
+```
+https://raw.githubusercontent.com/YOU/magicskills/main/skills/deep-search/SKILL.md
+Target: "ECONNRESET" to Redis on Node 20 inside Kubernetes only under load.
+```
+
+### Coding
+```
+https://raw.githubusercontent.com/YOU/magicskills/main/skills/coding/SKILL.md
+Goal: POST /shorten returns { code, url }
+Stack: Express + TypeScript
+```
+
+### Debugger
+```
+https://raw.githubusercontent.com/YOU/magicskills/main/skills/debugger/SKILL.md
+Symptom: 500 on checkout when coupon applied
+Stack: <paste>
+```
+
+### Scanning
+```
+https://raw.githubusercontent.com/YOU/magicskills/main/skills/scanning/SKILL.md
+Target: <paste repo files or tree>
+Passes: default
+```
+
+### Cyber Security
+```
+https://raw.githubusercontent.com/YOU/magicskills/main/skills/cyber-security/SKILL.md
+Target: password-reset design (email token links)
+Defensive review + hardening only
+```
+
+### Issues Founder
+```
+https://raw.githubusercontent.com/YOU/magicskills/main/skills/issues-founder/SKILL.md
+Target: <code or prior scan>
+Focus: correctness + security risks
+```
+
+## Chain manually
 
 ```
-Run MagicSkills chain: think → debug → test
+Chain: Thinking → Coding → Scanning → Issues Founder
 Loader: https://raw.githubusercontent.com/YOU/magicskills/main/LOADER.md
-
-Context:
-...
+Mission: ...
 ```
 
-## Cursor / coding agents
+## Tip
 
-```
-Before changing code, load and follow:
-/skills/debug/SKILL.md  (or paste raw GitHub URL)
-
-Work step by step; don't skip verification.
-```
-
-## Local path style
-
-If the repo is cloned into the workspace:
-
-```
-Open magicskills/LOADER.md and magicskills/INDEX.md.
-Pick skills for: <request>
-Execute step by step; show step outputs.
-```
-
-## Tips
-
-1. Always give **symptom + context** for debug/test.  
-2. Name the skill when you know it; otherwise point at `INDEX.md`.  
-3. Ask for the **final Output section** if the model drifts into a free-form essay.  
-4. For coding agents, pin: “Do not skip steps. Mark each step complete.”
+If the model drifts, say: **“Resume skill steps. Mark each step complete. Finish with the Output template.”**

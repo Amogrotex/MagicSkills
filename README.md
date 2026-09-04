@@ -1,119 +1,137 @@
 # MagicSkills
 
-**Intelligence booster for any AI.**  
-Give the AI a link to this repo (or a single skill file). It reads the skill prompts and runs them **step by step** — debug, test, think, plan, review, refactor, research, and more.
+**Link → AI reads skills → works step by step.**
 
-```
-You:  Use https://github.com/YOU/magicskills — skill: debug
-AI:   Loads skills/debug/SKILL.md → follows steps 1…N until done
-```
+A repo you give to any AI (ChatGPT, Claude, Cursor, Gemini, Arena, …).  
+It loads skill prompts and follows them one by one.
+
+## Skills (one by one)
+
+| Skill | Folder | Makes the AI better at |
+|-------|--------|-------------------------|
+| **Research** | `skills/research` | Facts, comparisons, sourced recommendations |
+| **Coding** | `skills/coding` | Spec → design → solid code → verify |
+| **Cyber Security** | `skills/cyber-security` | Defensive threats, weaknesses, hardening |
+| **Scanning** | `skills/scanning` | Checklist passes over code/config/deps |
+| **Issues Founder** | `skills/issues-founder` | Find, triage, and write real issue tickets |
+| **Thinking** | `skills/thinking` | Deep structured reasoning & decisions |
+| **Debugger** | `skills/debugger` | Root-cause debugging |
+| **Deep Search** | `skills/deep-search` | Exhaustive multi-angle search |
+| **ANIZ** | `skills/aniz` | **ALL IN ONE** — auto-routes the full pipeline |
+
+Security-related skills are **defensive only** (find & fix guidance — no exploit/attack playbooks).
 
 ---
 
-## Quick start (any AI)
+## Quick start
 
-1. Host this repo on GitHub (public) or any raw URL host.
-2. Paste one of these prompts into Claude, ChatGPT, Cursor, Gemini, etc.
-
-### Option A — Full pack (recommended)
+### All-in-one (recommended)
 
 ```
-Read and follow the MagicSkills loader:
+Read and follow:
 https://raw.githubusercontent.com/YOU/magicskills/main/LOADER.md
 
-My task: <describe what you need>
+Then run ANIZ:
+https://raw.githubusercontent.com/YOU/magicskills/main/skills/aniz/SKILL.md
+
+Mission: <your goal>
 ```
 
-### Option B — Single skill
+### One skill only
 
 ```
-Read this skill and execute it step by step:
-https://raw.githubusercontent.com/YOU/magicskills/main/skills/debug/SKILL.md
+Execute step by step:
+https://raw.githubusercontent.com/YOU/magicskills/main/skills/coding/SKILL.md
 
-Context: <paste error / code / goal>
+Goal: <...>
+Stack: <...>
 ```
 
-### Option C — Auto-pick
+### Auto-pick from index
 
 ```
-Open the MagicSkills index, pick the best skill(s) for my request, then run them in order:
+Use MagicSkills index to choose skill(s), then run them:
 https://raw.githubusercontent.com/YOU/magicskills/main/INDEX.md
+Loader: https://raw.githubusercontent.com/YOU/magicskills/main/LOADER.md
 
-Request: <your request>
+Request: <...>
 ```
 
-Replace `YOU/magicskills` with your GitHub user/org and repo name.
+Replace `YOU/magicskills` with your GitHub user/repo.
+
+### Local / cloned
+
+```
+Open magicskills/LOADER.md and magicskills/skills/aniz/SKILL.md
+Mission: ...
+Work step by step; mark each step complete.
+```
 
 ---
 
-## What’s inside
+## Layout
 
-| Path | Purpose |
-|------|---------|
-| `LOADER.md` | Meta-prompt: how the AI must load & run skills |
-| `INDEX.md` | Catalog of skills + when to use each |
-| `skills/<name>/SKILL.md` | One skill = clear steps the AI must follow |
-| `templates/SKILL.template.md` | Blueprint to add your own skills |
-| `examples/` | Sample runs so humans & AIs see the expected shape |
-
-### Core skills (intelligence boosters)
-
-| Skill | Boosts |
-|-------|--------|
-| **think** | Structured reasoning before acting |
-| **debug** | Systematic root-cause debugging |
-| **test** | Test design, gaps, and verification |
-| **plan** | Break work into ordered steps |
-| **review** | Code / design review checklist |
-| **refactor** | Safe improvement without behavior change |
-| **research** | Gather, compare, and cite findings |
-
----
-
-## Skill format (short)
-
-Every skill is a markdown file with:
-
-1. **When to use** — triggers
-2. **Inputs** — what the human should provide
-3. **Process** — numbered steps (mandatory order)
-4. **Output** — exact shape of the final answer
-5. **Quality bar** — what “done” means
-6. **Anti-patterns** — what not to do
-
-See `templates/SKILL.template.md`.
+```
+magicskills/
+  LOADER.md           # how any AI must load & run skills
+  INDEX.md            # catalog + auto-pick rules
+  catalog.json        # machine-readable list
+  skills/
+    aniz/SKILL.md
+    research/SKILL.md
+    coding/SKILL.md
+    cyber-security/SKILL.md
+    scanning/SKILL.md
+    issues-founder/SKILL.md
+    thinking/SKILL.md
+    debugger/SKILL.md
+    deep-search/SKILL.md
+  templates/SKILL.template.md
+  examples/
+```
 
 ---
 
-## Add your own skill
+## ANIZ in plain words
+
+You state a **mission**. ANIZ:
+
+1. Tags it (`learn` / `build` / `fix` / `audit` / `decide`)
+2. Builds a **chain** of the skills above
+3. Runs each skill step by step
+4. Returns one pack: summary, deliverables, prioritized backlog, next actions
+
+Modes: `fast` · `full` (default) · `secure`
+
+---
+
+## Add a skill
 
 ```bash
 cp templates/SKILL.template.md skills/my-skill/SKILL.md
-# edit the file, then add a row to INDEX.md
+# edit, then add a row to INDEX.md and catalog.json
 ```
 
-Keep steps **atomic, ordered, and checkable**. Prefer verbs: *List*, *Hypothesize*, *Verify*, *Report*.
+---
+
+## Publish
+
+```bash
+cd magicskills
+git remote add origin git@github.com:YOU/magicskills.git   # if needed
+git push -u origin main
+```
 
 ---
 
-## Design principles
+## Security notes
 
-1. **Steps over vibes** — the AI must not skip steps.
-2. **Evidence over guesses** — debug/test/research demand proof.
-3. **Composable** — chain skills (`think` → `plan` → `debug` → `test`).
-4. **Model-agnostic** — plain markdown; no proprietary tool APIs required.
-5. **Link-loadable** — one URL is enough; no install.
-
----
-
-## Security
-
-- Never put API keys, tokens, or secrets in this repo or in skill files.
-- If you ever paste a token in chat, **revoke it immediately** on the provider.
-- Skills may ask the AI to read code you provide; treat untrusted code as untrusted.
+- Never commit API keys or tokens.
+- If a token was pasted in chat, revoke it on the provider immediately.
+- Cyber Security / Scanning / Issues Founder = defensive remediation only.
 
 ---
 
 ## License
 
-MIT — use freely, improve freely.
+MIT
