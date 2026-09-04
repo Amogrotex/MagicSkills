@@ -2,8 +2,9 @@
 
 > Deep structured reasoning — clarify goals, challenge assumptions, decide with tradeoffs.
 
-**Version:** 2.0.0  
-**Chain well with:** Research, Coding, ANIZ, Debugger
+**Version:** 3.0.0  
+**Chain well with:** Research, Coding, ANIZ, Debugger  
+**Effort levels:** Fast · Balanced · Max
 
 ---
 
@@ -12,9 +13,8 @@
 - Vague, high-stakes, or conflicting goals
 - Need clarity before coding or researching
 - Multiple valid approaches; must choose
-- Human says “think”, “reason”, “help me decide”
 
-**Do not use when:** the task is a single clear mechanical step with obvious acceptance criteria.
+**Do not use when:** one clear mechanical step with obvious acceptance criteria.
 
 ---
 
@@ -25,62 +25,90 @@
 | Request | yes | What they want |
 | Context | no | Background, stack, constraints |
 | Hard limits | no | Time, money, “must not” |
+| Effort | no | Fast / Balanced / Max (default Balanced) |
+
+---
+
+## Effort matrix
+
+| | **Fast** | **Balanced** | **Max** |
+|--|----------|--------------|---------|
+| **Goal** | Direction in minutes | Sound decision | Decision that survives stress |
+| **Options** | 2 | 2–4 | 4–6 + “do nothing” |
+| **Steps** | 1, 3, 4 | 1–6 | 1–6 + Max extensions |
+| **Prose** | Bullets only | Short sections | Full + devil’s advocate memo |
+| **Next actions** | 1–3 | 3–5 | 5 + validation experiment |
+
+### Fast
+- Skip long unknown inventories; list only critical assumptions (max 3)
+- One primary option + one alternative
+- No extended stress essay
+
+### Balanced
+- Full core process below
+
+### Max
+- Full process, then **Max extensions**
+- Pre-mortem, second-order effects, decision journal
+- Explicit “what would change my mind” metrics
 
 ---
 
 ## Process
 
 ### Step 1 — Restate the real goal
+- One sentence **outcome** (not the method).
+- Goal vs suggested means.
+- Observable “done”.
 
-- One sentence **outcome** (not the method they assumed).
-- Separate goal vs suggested means.
-- Define “done” in observable terms.
-
-**Output of step:**
-```
-Goal: ...
-Means suggested: ...
-Done looks like: ...
-```
+**Output:** `Goal / Means suggested / Done looks like`
 
 ### Step 2 — Known / unknown / assume
+*(Balanced+; Fast: only top 3 assumptions)*
+- Knowns · Unknowns · Assumptions (labeled)
 
-- Knowns (facts given)
-- Unknowns (would change the plan)
-- Assumptions (labeled; invite correction)
-
-**Output of step:** three bullet lists.
+**Output:** three lists
 
 ### Step 3 — Force options
-
-- 2–4 genuinely different approaches.
+- Genuinely different approaches (count by effort).
 - Table: Option | Upside | Downside | Risk | Effort (S/M/L) | Reversible?
 
-**Output of step:** options table.
+**Output:** options table
 
 ### Step 4 — Decide
+- Pick + **why**
+- Reversal triggers
+- First moves
 
-- Pick one (or hybrid) + **why**.
-- Reversal triggers (“change mind if…”).
-- First moves (max 5).
-
-**Output of step:** decision block.
+**Output:** decision block
 
 ### Step 5 — Stress test
+*(Balanced+)*
+- Strongest objection · failure mode · mitigations
 
-- Strongest objection
-- How this fails
-- Mitigations
+**Output:** 3 bullets (Max: expand to short pre-mortem)
 
-**Output of step:** 3 bullets.
+### Step 6 — Quality check
+*(Balanced+)*
+- Real goal answered? Hidden assumptions? Smallest validation experiment?
 
-### Step 6 — Thinking quality check
+**Output:** pass/fail + experiment
 
-- Did we answer the real goal?
-- Any hidden assumption still buried?
-- What’s the smallest experiment to validate?
+---
 
-**Output of step:** pass/fail notes + experiment.
+## Max extensions
+
+### M1 — Pre-mortem
+Assume the decision failed in 6 months. List 5 reasons. Mitigate top 3.
+
+### M2 — Second-order effects
+Who/what else changes? Incentives, ops load, lock-in.
+
+### M3 — Decision journal
+Record: context, options, choice, expected outcome, review date.
+
+### M4 — Counter-recommendation
+Best case for the **rejected** runner-up. Why still reject?
 
 ---
 
@@ -88,6 +116,7 @@ Done looks like: ...
 
 ```markdown
 ## Thinking result
+**Effort:** Fast | Balanced | Max
 
 ### Goal
 ...
@@ -112,6 +141,12 @@ Done looks like: ...
 ### Revisit if
 - ...
 
+### Max only
+#### Pre-mortem
+...
+#### Decision journal
+...
+
 ### Next actions
 1.
 2.
@@ -121,9 +156,10 @@ Done looks like: ...
 
 ## Quality bar
 
+- [ ] Effort announced and followed
 - [ ] Outcome-based goal
-- [ ] ≥2 real options
-- [ ] Explicit assumptions
+- [ ] Options count meets effort
+- [ ] Assumptions explicit
 - [ ] Actionable first moves
 
 ---
@@ -132,4 +168,4 @@ Done looks like: ...
 
 - Jumping to code mid-think
 - One option fake-analyzed
-- Endless rumination, no decision
+- Running Max depth when asked Fast (or the reverse)

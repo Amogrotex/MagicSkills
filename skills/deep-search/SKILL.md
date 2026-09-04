@@ -2,19 +2,19 @@
 
 > Exhaustive multi-angle search — when shallow research is not enough.
 
-**Version:** 2.0.0  
-**Chain well with:** Research, Thinking, Issues Founder, ANIZ
+**Version:** 3.0.0  
+**Chain well with:** Research, Thinking, Issues Founder, ANIZ  
+**Effort levels:** Fast · Balanced · Max
 
 ---
 
 ## When to use
 
-- Obscure errors, rare APIs, “nobody talks about this”
-- Need coverage across docs, code, issues, changelogs, forums
-- Prior research felt thin or contradictory
-- Human says “deep search”, “leave no stone”, “dig”
+- Obscure errors, rare APIs, contradictory info
+- Need docs + issues + source + changelogs
+- Human says “deep search”, “dig”, “leave no stone”
 
-**Do not use when:** a single official doc answers it (→ Research) or you only need a quick decision (→ Thinking).
+**Do not use when:** one official doc answers it (→ Research).
 
 ---
 
@@ -22,67 +22,97 @@
 
 | Input | Required | Description |
 |-------|----------|-------------|
-| Target | yes | Error string, topic, API, behavior |
-| Clues | no | Versions, env, what already failed |
-| Scope | no | Languages, products, date range |
+| Target | yes | Error, topic, API, behavior |
+| Clues | no | Versions, env, failed attempts |
+| Scope | no | Languages, products, dates |
+| Effort | no | Fast / Balanced / Max |
+
+---
+
+## Effort matrix
+
+| | **Fast** | **Balanced** | **Max** |
+|--|----------|--------------|---------|
+| **Goal** | Best lead quickly | Solid multi-angle picture | Exhaustive map + dead ends |
+| **Angles** | 2–3 | 4–6 | All 7 + adjacent |
+| **Steps** | 1, 3, 5 | 1–6 | 1–6 + Max extensions |
+| **Negatives** | Optional | Record key misses | Full dead-end log |
+| **Confidence** | H/M/L gut | Justified | Justified + what would raise it |
+
+### Fast
+- Pin queries → hit highest-yield angles only → synthesize lead
+
+### Balanced
+- Full core multi-angle pass
+
+### Max
+- All angles, version timeline, conflict court, search debt ledger
 
 ---
 
 ## Process
 
 ### Step 1 — Pin the query objects
+- Exact strings (errors, symbols, packages, CVEs)
+- Synonyms · version pins
 
-- Exact strings to hunt (errors, symbols, CVEs, package names)
-- Synonyms and related terms
-- Version pins (language, lib, OS)
-
-**Output of step:** query object list.
+**Output:** query object list
 
 ### Step 2 — Angle map
-
-Cover **multiple angles** (skip only if truly N/A):
+*(Balanced+; Fast: pick top angles only)*
 
 1. Official docs / API reference  
-2. Changelogs / release notes / migration guides  
+2. Changelogs / release notes / migrations  
 3. Issue trackers (open + closed)  
-4. Source code / signatures / types  
+4. Source code / types / signatures  
 5. Security advisories (if relevant)  
-6. Community (SO, Discords, blogs) — low trust, high signal for workarounds  
-7. Adjacent systems (proxies, OS limits, cloud quirks)
+6. Community (lower trust)  
+7. Adjacent systems (OS, proxy, cloud limits)
 
-**Output of step:** angle checklist with planned queries.
+**Output:** angle checklist + queries
 
 ### Step 3 — Execute angles
+- Per angle: finding, confidence H/M/L, source
+- Note negatives
+- Version gotchas
 
-- For each angle: what you found, confidence (H/M/L), source
-- Capture negative results (“not in docs”) — they matter
-- Extract version-specific gotchas
+**Output:** per-angle log
 
-**Output of step:** per-angle findings log.
+### Step 4 — Cross-link & conflicts
+*(Balanced+)*
+- Agree vs conflict · authority · version timeline
 
-### Step 4 — Cross-link & resolve conflicts
-
-- Where sources agree
-- Where they conflict → which is authoritative and why
-- Timeline: did behavior change in version X?
-
-**Output of step:** consensus vs conflict table.
+**Output:** consensus/conflict table
 
 ### Step 5 — Synthesis
+- Best explanation · action/experiment · dead ends
 
-- Best current explanation
-- Actionable fix or next experiment
-- Dead ends (so we don’t repeat them)
-
-**Output of step:** synthesis block.
+**Output:** synthesis block
 
 ### Step 6 — Search debt
+*(Balanced+)*
+- Unsearched · later queries · hand-off skill
 
-- What still unsearched
-- Queries worth running later
-- Hand-off: Research (polish) / Debugger (apply) / Coding (implement)
+**Output:** debt + hand-off
 
-**Output of step:** debt list + hand-off.
+---
+
+## Max extensions
+
+### M1 — Version timeline
+Behavior by version; when it changed; migration notes.
+
+### M2 — Conflict court
+For each major conflict: claim A vs B, evidence, ruling, residual doubt.
+
+### M3 — Adjacent blast
+Drivers, containers, reverse proxies, rate limits, clocks, locales.
+
+### M4 — Reproducible search log
+Queries/strings another person can re-run.
+
+### M5 — Hand-off pack
+Ready input blocks for Debugger / Coding / Research.
 
 ---
 
@@ -90,6 +120,7 @@ Cover **multiple angles** (skip only if truly N/A):
 
 ```markdown
 ## Deep Search result
+**Effort:** Fast | Balanced | Max
 
 ### Target
 ...
@@ -110,29 +141,31 @@ High | Medium | Low — why
 ### Dead ends
 - ...
 
+### Max only
+#### Version timeline
+...
+#### Search log
+...
+
 ### Do next
 1.
 2.
 3.
-
-### Next actions
-1.
-2.
 ```
 
 ---
 
 ## Quality bar
 
-- [ ] ≥3 angles actually covered
-- [ ] Negative results recorded
-- [ ] Versions called out
-- [ ] No fake issue numbers or URLs
+- [ ] Effort announced
+- [ ] Angle count meets effort
+- [ ] No fake issue numbers/URLs
+- [ ] Versions called out when relevant
 
 ---
 
 ## Anti-patterns
 
-- One Google-ish paraphrase called “deep”
+- One shallow paraphrase called “deep”
 - Only blogs, no primaries
-- Ignoring closed issues / release notes
+- Max dump with no synthesis

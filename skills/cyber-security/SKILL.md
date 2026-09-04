@@ -2,30 +2,30 @@
 
 > Defensive security analysis — threats, weaknesses, impact, and hardening guidance.
 
-**Version:** 2.0.0  
-**Chain well with:** Scanning, Issues Founder, Coding, Thinking, ANIZ
+**Version:** 3.0.0  
+**Chain well with:** Scanning, Issues Founder, Coding, Thinking, ANIZ  
+**Effort levels:** Fast · Balanced · Max
 
 ---
 
-## Mandate (hard rules)
+## Mandate (hard rules — all efforts)
 
-This skill is **defensive only**.
+**Defensive only.**
 
-- **Do:** identify weaknesses, explain impact, recommend fixes, secure defaults, detection ideas.
-- **Do not:** write exploits, weaponized PoCs, bypass kits, or step-by-step attack instructions aimed at breaking into systems.
-- If asked to attack or exploit: refuse that part; offer hardening and safe verification instead.
-- Prefer fixes the owner can apply on systems they control.
+- **Do:** weaknesses, impact, fixes, secure defaults, detection ideas, safe verification.
+- **Do not:** exploits, weaponized PoCs, bypass kits, attack playbooks.
+- If asked to attack: refuse that part; offer hardening + safe checks.
+- Prefer fixes on systems the owner controls.
 
 ---
 
 ## When to use
 
 - “Is this secure?”, threat model, auth/session design
-- Hardening apps, APIs, configs, cloud IAM (high level)
-- Reviewing code for vulnerability classes (OWASP-style)
-- Responding to a suspected weakness with remediation
+- Hardening apps/APIs/configs (high level)
+- Vulnerability *classes* in code (OWASP-style)
 
-**Do not use when:** the human wants offensive tooling/exploits, or a pure functional bug with no security angle (→ Debugger).
+**Do not use when:** offensive tooling requested, or pure functional bug (→ Debugger).
 
 ---
 
@@ -33,71 +33,94 @@ This skill is **defensive only**.
 
 | Input | Required | Description |
 |-------|----------|-------------|
-| Target | yes | App, API, design, snippet, architecture |
-| Trust boundaries | no | Users, roles, networks, tenancy |
+| Target | yes | App, API, design, snippet |
+| Trust boundaries | no | Users, roles, networks |
 | Stack | no | Language, framework, host |
-| Sensitivity | no | PII, payments, secrets, regulated data |
+| Sensitivity | no | PII, payments, secrets |
+| Effort | no | Fast / Balanced / Max |
+
+---
+
+## Effort matrix
+
+| | **Fast** | **Balanced** | **Max** |
+|--|----------|--------------|---------|
+| **Goal** | Top risks + fixes | Solid threat + findings | Deep defensive review |
+| **Threats** | 2–3 | Full sketch | Actors × assets matrix |
+| **Findings depth** | P0/P1 only | P0–P2 | P0–P2 + systematic classes |
+| **Steps** | 1, 3, 5 | 1–6 | 1–6 + Max extensions |
+| **Verification** | Fix direction | Safe test ideas | Test + detect + review plan |
+
+### Fast
+- Boundaries skim → top weaknesses → priority fixes
+
+### Balanced
+- Full core defensive process
+
+### Max
+- Full process + STRIDE-ish pass, abuse cases, control gaps, residual risk register
 
 ---
 
 ## Process
 
 ### Step 1 — Asset & boundary map
+- Protect what · trust boundaries · AuthN/AuthZ as understood  
+*(Fast: short bullet map)*
 
-- What needs protection (data, functions, keys)
-- Trust boundaries (browser, API, admin, workers, third parties)
-- AuthN / AuthZ model (as understood)
-
-**Output of step:** assets + boundaries diagram (text).
+**Output:** assets + boundaries
 
 ### Step 2 — Threat sketch
+*(Balanced+)*
+- Actors · goal classes · bad outcomes  
+*(Not exploit steps)*
 
-- Who might abuse it (roles: anonymous, user, insider, dependency)
-- What they might try *at a class level* (e.g. “IDOR on object IDs”) — not exploit steps
-- What “bad outcome” looks like (data leak, account takeover, fraud, RCE class, etc.)
-
-**Output of step:** threat list (actor → goal → bad outcome).
+**Output:** threat list
 
 ### Step 3 — Weakness hunt (classes)
+As applicable: broken auth/session, access control, injection classes, SSRF/path/deser, secrets, CSRF/CORS, crypto misuse, supply chain, misconfig/IAM, uploads.
 
-Inspect for common classes **as applicable**:
+Each finding: location, class, impact, likelihood L/M/H.
 
-- Broken auth / session / token handling  
-- Broken access control (IDOR, privilege rise)  
-- Injection (SQL/command/XSS/template) — describe pattern & fix  
-- SSRF, path traversal, unsafe deser (if relevant)  
-- Secrets in code/config/logs  
-- CSRF, CORS misconfig  
-- Crypto misuse, weak randomness  
-- Supply chain / dependency risk (high level)  
-- Misconfiguration & over-permissioned IAM  
-- Unsafe file upload / parsing  
-
-For each finding: location, class, impact, likelihood (L/M/H).
-
-**Output of step:** findings table draft.
+**Output:** findings draft
 
 ### Step 4 — Impact & priority
+*(Balanced+; Fast: rank top 3)*
+| ID | Class | Impact | Likelihood | P0–P2 | Fix direction |
 
-| ID | Class | Impact | Likelihood | Priority (P0–P2) | Fix direction |
-
-**Output of step:** prioritized table.
+**Output:** prioritized table
 
 ### Step 5 — Hardening plan
+- Concrete remediations
+- Safe verification (tests/config checks — **not** exploit scripts)
+- Detection/logging where useful
 
-- Concrete remediations (secure patterns, config, code changes)
-- Safe verification ideas (unit tests, config checks, authz tests) — **not** exploit scripts
-- Defense in depth (detect/log/alert) where useful
-
-**Output of step:** remediation list ordered by priority.
+**Output:** ordered remediations
 
 ### Step 6 — Residual risk
+*(Balanced+)*
+- Accepted remains · deeper review needs · monitoring
 
-- What remains accepted
-- What needs deeper human/pentest review
-- Monitoring suggestions
+**Output:** residual risk
 
-**Output of step:** residual risk block.
+---
+
+## Max extensions
+
+### M1 — STRIDE-style pass
+Spoofing, Tampering, Repudiation, Info disclosure, DoS, Elevation — notes per boundary (descriptive).
+
+### M2 — Abuse cases
+Misuse stories as **defender** narratives (“abusive user attempts X”) + control that should stop it.
+
+### M3 — Control catalog
+Prevent / detect / respond for each P0–P1.
+
+### M4 — Secure design alternatives
+Safer pattern vs current; migration difficulty.
+
+### M5 — Review checklist export
+Paste-ready checklist for future changes in this area.
 
 ---
 
@@ -105,6 +128,7 @@ For each finding: location, class, impact, likelihood (L/M/H).
 
 ```markdown
 ## Cyber Security result
+**Effort:** Fast | Balanced | Max
 
 ### Scope
 ...
@@ -127,6 +151,12 @@ For each finding: location, class, impact, likelihood (L/M/H).
 ### Residual risk
 - ...
 
+### Max only
+#### STRIDE notes
+...
+#### Control catalog
+...
+
 ### Next actions
 1.
 2.
@@ -137,15 +167,15 @@ For each finding: location, class, impact, likelihood (L/M/H).
 
 ## Quality bar
 
-- [ ] Findings are specific and actionable
-- [ ] Priorities reflect real impact
-- [ ] Fixes are defensive and practical
-- [ ] No exploit/PoC attack material
+- [ ] Effort announced
+- [ ] Actionable defensive fixes
+- [ ] Priorities match impact
+- [ ] Zero exploit/PoC material
 
 ---
 
 ## Anti-patterns
 
-- Scare list with no fixes
-- Generic “use HTTPS” only when deeper issues exist
-- Delivering attack recipes “for education” when asked to break things
+- Scare list, no fixes
+- Attack recipes “for education” when asked to break things
+- Max theater without findings

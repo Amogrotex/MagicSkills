@@ -2,18 +2,18 @@
 
 > Ship solid code — clarify behavior, design small, implement clean, verify.
 
-**Version:** 2.0.0  
-**Chain well with:** Thinking, Research, Debugger, Issues Founder, Scanning, ANIZ
+**Version:** 3.0.0  
+**Chain well with:** Thinking, Research, Debugger, Issues Founder, Scanning, ANIZ  
+**Effort levels:** Fast · Balanced · Max
 
 ---
 
 ## When to use
 
-- Write new code, features, scripts, components
-- Modify existing code with clear intent
-- Generate production-minded implementations (not throwaway junk)
+- Write or change code, features, scripts, components
+- Production-minded implementations
 
-**Do not use when:** root cause of a bug is still unknown (→ Debugger first) or the goal itself is unclear (→ Thinking first).
+**Do not use when:** root cause unknown (→ Debugger) or goal unclear (→ Thinking).
 
 ---
 
@@ -23,66 +23,95 @@
 |-------|----------|-------------|
 | Goal | yes | What the code must do |
 | Stack | yes | Language, framework, runtime |
-| Context | no | Existing files, APIs, style |
-| Constraints | no | Perf, no-new-deps, public API freeze |
+| Context | no | Files, APIs, style |
+| Constraints | no | Perf, deps, API freeze |
+| Effort | no | Fast / Balanced / Max |
+
+---
+
+## Effort matrix
+
+| | **Fast** | **Balanced** | **Max** |
+|--|----------|--------------|---------|
+| **Goal** | Working slice | Clean, verified feature | Production-hardened |
+| **Design** | Signatures only | Files + types + edges | + failure modes, rollout |
+| **Tests** | How-to-run notes | Happy + edge + fail | Table of cases + code |
+| **Self-review** | Quick pass | Structured checklist | + security/perf lens |
+| **Steps** | 1, 3, 5 | 1–6 | 1–6 + Max extensions |
+
+### Fast
+- Tiny spec → code → run instructions
+- Skip long design essays and deep review
+
+### Balanced
+- Full core process
+
+### Max
+- Full process + characterization tests, API notes, rollback, complexity notes
 
 ---
 
 ## Process
 
 ### Step 1 — Spec the behavior
-
 - Inputs / outputs / side effects
 - Error cases
-- Non-goals (what we are *not* building)
+- Non-goals  
+*(Fast: 5 lines max)*
 
-**Output of step:** short behavior spec.
+**Output:** behavior spec
 
 ### Step 2 — Shape the design
+*(Balanced+)*
+- Files/modules · interfaces · deps · edges
 
-- Where code lives (files/modules)
-- Data structures & interfaces (types/signatures)
-- Dependencies (reuse vs add)
-- Edge cases list
-
-**Output of step:** design sketch (signatures + file plan).
+**Output:** design sketch
 
 ### Step 3 — Implement in thin slices
+- Smallest working slice first
+- Clarity > cleverness
+- Match project style when known
+- No unrelated refactors
 
-- Build the smallest working slice first
-- Prefer clarity over cleverness
-- Match existing project style when context exists
-- No drive-by unrelated refactors
+**Output:** code / patches
 
-**Output of step:** code (or ordered patches).
+### Step 4 — Self-review
+*(Balanced+; Fast: 3-bullet glance)*
+- Correctness · errors · resources · security footguns · naming
 
-### Step 4 — Self-review the diff
-
-Check for:
-
-- Correctness vs spec
-- Error handling
-- Resource cleanup / boundaries
-- Security footguns (injection, secrets, authz) at a glance
-- Naming and readability
-
-**Output of step:** self-review notes (issues found + fixed).
+**Output:** review notes (+ fixes applied)
 
 ### Step 5 — Verify
+- Run/test instructions
+- Cases by effort (see matrix)
+- If can’t run: exact commands + expected results
 
-- How to run / test
-- Happy path + ≥1 edge + ≥1 failure case
-- If tests can’t run here: provide exact commands and expected results
-
-**Output of step:** verification plan (+ tests if applicable).
+**Output:** verification plan (+ tests)
 
 ### Step 6 — Handoff
+*(Balanced+)*
+- Done · remains · risks/TODOs
 
-- What was done
-- What remains
-- Risks / TODOs
+**Output:** handoff bullets
 
-**Output of step:** handoff bullets.
+---
+
+## Max extensions
+
+### M1 — Case table
+| ID | Type | Input | Expected | Covered by |
+
+### M2 — API / contract notes
+Public signatures, error codes, backwards compatibility.
+
+### M3 — Failure & rollback
+Partial failure, idempotency, how to revert.
+
+### M4 — Complexity & perf notes
+Expected cost, obvious bottlenecks, safe limits.
+
+### M5 — Security glance
+AuthZ, injection surfaces, secret handling in *this* change.
 
 ---
 
@@ -90,6 +119,7 @@ Check for:
 
 ```markdown
 ## Coding result
+**Effort:** Fast | Balanced | Max
 
 ### Spec
 ...
@@ -109,6 +139,12 @@ Check for:
 ### Risks & TODOs
 - ...
 
+### Max only
+#### Case table
+...
+#### Rollback
+...
+
 ### Next actions
 1.
 2.
@@ -119,16 +155,16 @@ Check for:
 
 ## Quality bar
 
+- [ ] Effort announced
 - [ ] Matches spec
-- [ ] Edge/error paths considered
-- [ ] Runnable or clearly testable
-- [ ] No invented project files presented as already existing
+- [ ] Verification depth meets effort
+- [ ] No fake “existing” project files
 
 ---
 
 ## Anti-patterns
 
-- Giant dump with no structure
-- “Something like this” pseudo-code when real code was asked
-- Silent scope creep / rewrites
-- Ignoring the repo’s existing patterns
+- Giant unstructured dump
+- Pseudo-code when real code was asked
+- Silent rewrites
+- Max gold-plating on Fast request

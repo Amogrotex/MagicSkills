@@ -2,19 +2,17 @@
 
 > Find real issues, triage them hard, write clear actionable issue reports.
 
-**Version:** 2.0.0  
-**Chain well with:** Scanning, Cyber Security, Debugger, Coding, Review-style passes, ANIZ
+**Version:** 3.0.0  
+**Chain well with:** Scanning, Cyber Security, Debugger, Coding, ANIZ  
+**Effort levels:** Fast · Balanced · Max
 
 ---
 
 ## When to use
 
-- “Find bugs / problems / issues in this”
-- Turn scan or review notes into tickets
-- Pre-ship defect hunt (functional, UX, reliability, security-as-issues)
-- Human says “issues founder”, “find issues”, “triage”
+- Find bugs/problems; turn scans into tickets; pre-ship defect hunt
 
-**Do not use when:** a single known bug needs root cause (→ Debugger) or they only want code written (→ Coding).
+**Do not use when:** one known bug needs root cause (→ Debugger) or only code wanted (→ Coding).
 
 ---
 
@@ -22,66 +20,76 @@
 
 | Input | Required | Description |
 |-------|----------|-------------|
-| Target | yes | Code, design, product area, scan output |
-| Quality bar | no | What “good” means; severity policy |
-| Focus | no | Security, UX, perf, correctness, docs |
+| Target | yes | Code, design, scan output |
+| Quality bar | no | Severity policy |
+| Focus | no | Security, UX, perf, correctness |
+| Effort | no | Fast / Balanced / Max |
+
+---
+
+## Effort matrix
+
+| | **Fast** | **Balanced** | **Max** |
+|--|----------|--------------|---------|
+| **Goal** | Top issues now | Solid ticket pack | Exhaustive triage pack |
+| **Lenses** | 2–3 | 5–6 | All 8 |
+| **Tickets written** | P0–P1 only | P0–P2 | P0–P3 + icebox list |
+| **Steps** | 1, 2, 4, 5 | 1–6 | 1–6 + Max extensions |
+| **Evidence** | Location + why | Full ticket fields | + repro confidence notes |
+
+### Fast
+- Define focus → hunt hot lenses → triage → write P0/P1 tickets only
+
+### Balanced
+- Full process, proper tickets P0–P2
+
+### Max
+- All lenses, dedupe graph, fix-order dependencies, acceptance criteria per ticket
 
 ---
 
 ## Process
 
 ### Step 1 — Define “issue”
+- Defect · risk · gap · debt (debt only if it blocks)
+- Focus areas
 
-Agree what counts:
-
-- Defect (wrong behavior)
-- Risk (likely future defect / security weakness)
-- Gap (missing requirement, test, observability)
-- Debt (only if it blocks change or reliability — avoid nit spam)
-
-**Output of step:** issue definition + focus.
+**Output:** definitions + focus
 
 ### Step 2 — Hunt by lenses
-
-Run lenses (skip N/A):
-
-1. Correctness / edge cases  
-2. Error handling & resilience  
-3. Security & privacy (defensive findings only)  
-4. Performance & resource use  
+1. Correctness / edges  
+2. Errors & resilience  
+3. Security & privacy (defensive only)  
+4. Performance & resources  
 5. UX / API usability  
 6. Concurrency / idempotency  
-7. Operability (logs, metrics, config)  
+7. Operability (logs/metrics/config)  
 8. Tests missing for risky paths  
 
-**Output of step:** raw notes per lens.
+**Output:** raw notes (lens count by effort)
 
 ### Step 3 — Dedupe & evidence
+*(Balanced+)*
+- Merge dupes · where/what/impact/how-you-know · drop taste-only
 
-- Merge duplicates
-- Each surviving issue needs: **where**, **what**, **why it matters**, **how you know**
-- Drop pure taste without impact
-
-**Output of step:** candidate list with evidence.
+**Output:** candidates + evidence
 
 ### Step 4 — Severity triage
-
 | Sev | Meaning |
 |-----|---------|
-| P0 | Breaks core / security critical / data loss — fix now |
-| P1 | Serious; ship-blocker or near-term |
-| P2 | Real issue; schedule |
-| P3 | Minor / polish |
-| Icebox | Valid but not worth a ticket now |
+| P0 | Core break / critical security / data loss |
+| P1 | Serious; near-term / ship risk |
+| P2 | Real; schedule |
+| P3 | Minor |
+| Icebox | Valid, not worth now |
 
-**Output of step:** triaged list.
+**Output:** triaged list
 
 ### Step 5 — Write issue tickets
-
-For each P0–P2 (and important P3), write:
+Template:
 
 ```markdown
-### [Sev] Title (short, specific)
+### [Sev] Title
 
 **Type:** defect | risk | gap | debt
 **Location:** ...
@@ -94,15 +102,34 @@ For each P0–P2 (and important P3), write:
 **Repro confidence:** High | Medium | Low
 ```
 
-**Output of step:** ticket pack.
+*(Max: add Acceptance criteria)*
+
+**Output:** ticket pack (depth by effort)
 
 ### Step 6 — Map fix order
+*(Balanced+)*
+- Sequence · quick wins · hand-offs (Debugger/Coding/Cyber Security)
 
-- Recommended sequence (dependencies between fixes)
-- Quick wins vs deep work
-- Which tickets need Debugger / Coding / Cyber Security next
+**Output:** fix order
 
-**Output of step:** fix order + hand-offs.
+---
+
+## Max extensions
+
+### M1 — Dedupe graph
+Which raw notes merged into which ticket.
+
+### M2 — Acceptance criteria
+Per P0–P2: testable done-when bullets.
+
+### M3 — Effort labels
+S/M/L per ticket for planning.
+
+### M4 — Dependency map
+Ticket blocked-by relationships.
+
+### M5 — Release gate
+Which issues must close before ship.
 
 ---
 
@@ -110,6 +137,7 @@ For each P0–P2 (and important P3), write:
 
 ```markdown
 ## Issues Founder result
+**Effort:** Fast | Balanced | Max
 
 ### Focus
 ...
@@ -128,6 +156,12 @@ P0: n | P1: n | P2: n | P3: n | Icebox: n
 ### Out of scope / icebox
 - ...
 
+### Max only
+#### Release gate
+...
+#### Dependencies
+...
+
 ### Next actions
 1.
 2.
@@ -138,10 +172,10 @@ P0: n | P1: n | P2: n | P3: n | Icebox: n
 
 ## Quality bar
 
-- [ ] Every ticket has location + impact + evidence
+- [ ] Effort announced
+- [ ] Tickets have location + impact + evidence
 - [ ] Severities not inflated
-- [ ] Actionable suggested fixes
-- [ ] No exploit instructions inside security tickets — remediation only
+- [ ] Security tickets = remediation only, no exploits
 
 ---
 
@@ -149,5 +183,4 @@ P0: n | P1: n | P2: n | P3: n | Icebox: n
 
 - 50 style nits as P0
 - Vague “improve performance”
-- Issues without location
 - Mixing five bugs in one ticket

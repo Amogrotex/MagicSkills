@@ -1,10 +1,29 @@
 {
   "name": "magicskills",
-  "version": "2.0.0",
-  "description": "Link-loadable step-by-step AI skills: Research, Coding, Cyber Security, Scanning, Issues Founder, Thinking, Debugger, Deep Search, ANIZ (all-in-one).",
+  "version": "3.0.0",
+  "description": "Link-loadable step-by-step AI skills with Fast/Balanced/Max effort: Research, Coding, Cyber Security, Scanning, Issues Founder, Thinking, Debugger, Deep Search, ANIZ.",
   "loader": "LOADER.md",
+  "effort": "EFFORT.md",
   "index": "INDEX.md",
   "defaultSkill": "aniz",
+  "defaultEffort": "balanced",
+  "efforts": [
+    {
+      "id": "fast",
+      "aliases": ["fast", "quick", "low"],
+      "summary": "Minimum viable steps; compressed output; speed over depth"
+    },
+    {
+      "id": "balanced",
+      "aliases": ["balanced", "normal", "default", "medium", "full"],
+      "summary": "Full core process; solid default quality"
+    },
+    {
+      "id": "max",
+      "aliases": ["max", "deep", "high", "thorough", "exhaustive"],
+      "summary": "Full process plus extensions; highest rigor"
+    }
+  ],
   "skills": [
     {
       "id": "aniz",
@@ -63,10 +82,17 @@
   ],
   "chains": {
     "aniz": ["aniz"],
-    "learn": ["deep-search", "research", "thinking"],
-    "build": ["thinking", "research", "coding", "scanning", "issues-founder"],
-    "fix": ["debugger", "coding", "scanning", "issues-founder"],
-    "audit": ["scanning", "cyber-security", "issues-founder"],
-    "secure-build": ["thinking", "coding", "scanning", "cyber-security", "issues-founder"]
+    "learn_fast": ["research"],
+    "learn_balanced": ["research", "thinking"],
+    "learn_max": ["deep-search", "research", "thinking"],
+    "build_fast": ["thinking", "coding"],
+    "build_balanced": ["thinking", "research", "coding", "issues-founder"],
+    "build_max": ["thinking", "research", "coding", "scanning", "issues-founder"],
+    "fix_fast": ["debugger", "coding"],
+    "fix_balanced": ["debugger", "coding", "issues-founder"],
+    "fix_max": ["debugger", "coding", "scanning", "issues-founder"],
+    "audit_fast": ["scanning", "issues-founder"],
+    "audit_balanced": ["scanning", "cyber-security", "issues-founder"],
+    "audit_max": ["scanning", "cyber-security", "issues-founder", "coding"]
   }
 }

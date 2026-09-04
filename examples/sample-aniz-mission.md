@@ -1,56 +1,46 @@
-# Example: ANIZ mission trail (miniature)
+# Example: ANIZ with effort levels
 
-**Human:** Run ANIZ. Mission: Add rate limiting to our public Express API and file any issues you spot in the snippet.
+## A) Fast
 
-```js
-// app.js (snippet)
-app.post('/login', async (req, res) => {
-  const user = await db.findUser(req.body.user);
-  if (user && user.password === req.body.password) {
-    res.json({ token: user.id });
-  } else res.status(401).end();
-});
+**Human:** ANIZ · Effort: Fast · Mission: Do we need Redis for session store on a single VPS app?
+
 ```
+ANIZ · Effort: Fast · Tags: decide
+Chain: Thinking (Fast)
+```
+
+**Thinking Fast:** 2 options (sticky sessions / memory vs Redis) → Decision: memory OK until multi-instance → Next: revisit when scaling horizontally.
+
+**Backlog:** 3 short next actions. No full research stage.
 
 ---
 
-### ANIZ Step 0 — Mission brief
-- Mission: Add rate limiting; surface issues in login snippet  
-- Tags: `build` + `audit`  
-- Mode: `full`
+## B) Balanced
 
-### ANIZ Step 1 — Route
-Chain: **Thinking → Coding → Scanning → Cyber Security → Issues Founder**  
-(Why: need approach, implementation, surface scan, security lens, tickets)
+**Human:** ANIZ · Effort: Balanced · Mission: Add rate limiting to public Express login; file issues on this snippet.
 
-### Stage: Thinking
-- Decision: token-bucket / middleware rate limit per IP on `/login` + fix auth issues separately  
-- First moves: define limits, implement middleware, don’t store plaintext passwords as follow-up P0
+**Chain:** Thinking → Coding → Scanning → Cyber Security → Issues Founder (all Balanced)
 
-### Stage: Coding
-- Spec: 10 req/min/IP on `/login`, 429 + Retry-After  
-- Design: `rateLimit` middleware, in-memory store for single node  
-- Code: (middleware sketch)  
-- Verify: burst 11th request → 429
+Stage artifacts: decision, middleware sketch, scan table, security findings, P0–P2 tickets.
 
-### Stage: Scanning
-- S1 Secrets: none in snippet  
-- S3 Auth: plaintext password compare; token = user.id  
-- S4 Access: N/A small snippet  
-- Findings: High auth storage/compare; High predictable token
+---
 
-### Stage: Cyber Security
-- Threats: credential stuffing, token guessing, password leak from DB compromise  
-- Hardening: hash passwords (argon2/bcrypt), opaque session/JWT with secret, lockout/rate limit, generic 401  
+## C) Max
 
-### Stage: Issues Founder
-- P0: Passwords compared in plaintext  
-- P0: Token is raw user id  
-- P1: No rate limit (addressed by coding stage — verify merged)  
-- P2: No structured audit log on auth failure  
+**Human:** ANIZ · Effort: Max · Focus: secure · Mission: Same login snippet — production hardening pack.
 
-## ANIZ result (short)
+**Chain:** Thinking → Research → Coding → Scanning → Cyber Security → Issues Founder (all Max)
 
-**Deliverables:** rate-limit approach + middleware direction; security findings; issue tickets.  
-**Backlog:** P0 password hashing; P0 opaque tokens; confirm rate limit wired on `/login`.  
-**Next actions:** implement hash migration; issue session tokens; add tests for 429 and auth negatives.
+Extras: STRIDE notes, surface matrix, acceptance criteria on tickets, stage scorecard, re-run plan, regression net for auth.
+
+---
+
+## Per-stage override
+
+```
+ANIZ · Effort: Balanced
+Overrides: Cyber Security=Max, Research=Fast
+Mission: ...
+```
+
+Children inherit Balanced except CS=Max and Research=Fast.

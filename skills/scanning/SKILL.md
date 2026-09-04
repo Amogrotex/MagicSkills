@@ -2,26 +2,26 @@
 
 > Systematic checklist scans — inventory surfaces, run structured passes, report cleanly.
 
-**Version:** 2.0.0  
-**Chain well with:** Cyber Security, Issues Founder, Coding, Debugger, ANIZ
+**Version:** 3.0.0  
+**Chain well with:** Cyber Security, Issues Founder, Coding, Debugger, ANIZ  
+**Effort levels:** Fast · Balanced · Max
 
 ---
 
-## Mandate
+## Mandate (all efforts)
 
-- **Defensive / quality scanning only** on code, configs, deps, and designs the human is allowed to assess.
-- Produce inventories, checklist results, and fix hints.
-- Do **not** produce exploit payloads, attack automation, or instructions to scan/attack third-party systems without authorization context. If scope is unclear, assume **only assets the human owns** and state that assumption.
+- Defensive / quality scanning on assets the human may assess.
+- Inventories, checklist results, fix hints.
+- **No** exploit payloads or instructions to scan/attack third-party systems without authorization. If unclear, assume **owner’s assets only** and state that.
 
 ---
 
 ## When to use
 
 - “Scan this repo/file/config”
-- Pre-release checklist, dependency pass, secret hygiene pass
-- Inventory endpoints, permissions, env vars, attack surface (descriptive)
+- Pre-release checklist, secrets/deps/surfaces
 
-**Do not use when:** they need root-cause on one bug (→ Debugger) or full threat modeling narrative (→ Cyber Security).
+**Do not use when:** one bug’s root cause (→ Debugger) or full threat model narrative (→ Cyber Security).
 
 ---
 
@@ -29,72 +29,94 @@
 
 | Input | Required | Description |
 |-------|----------|-------------|
-| Target | yes | Repo path, files, config, design |
-| Scan types | no | Which passes (see Step 2); default = sensible set |
-| Baseline | no | Known accepted risks |
+| Target | yes | Repo, files, config, design |
+| Scan types | no | Pass IDs; default by effort |
+| Baseline | no | Accepted risks |
+| Effort | no | Fast / Balanced / Max |
+
+---
+
+## Effort matrix
+
+| | **Fast** | **Balanced** | **Max** |
+|--|----------|--------------|---------|
+| **Goal** | Hottest hits | Solid multi-pass | Full surface + coverage |
+| **Inventory** | Light | Full outline | Full + trust notes |
+| **Default passes** | S1, S3, S4, S5 | S1–S8 | S1–S10 |
+| **Steps** | 1, 3, 4 | 1–5 | 1–5 + Max extensions |
+| **Clean passes** | Optional | Explicit | Explicit + limits |
+
+### Fast
+- Quick inventory → high-signal passes → normalized top findings
+
+### Balanced
+- Full selected passes + coverage notes
+
+### Max
+- All applicable passes, severity rubric, blind-spot map, re-scan plan
 
 ---
 
 ## Process
 
 ### Step 1 — Inventory
+- Languages/manifests · entry points · auth vs public · config/env · data stores · external calls · CI hints  
+*(Fast: half-page max)*
 
-Map what exists:
-
-- Languages / package manifests
-- Entry points (HTTP routes, CLIs, workers, cron)
-- Auth’d vs public surfaces
-- Config & env surface
-- Data stores & external calls
-- CI/CD hints if present
-
-**Output of step:** inventory outline.
+**Output:** inventory outline
 
 ### Step 2 — Select scan passes
+*(Balanced+; Fast: fixed default set)*
 
-Choose applicable passes (skip N/A with reason):
+| Pass | Name | Looks for |
+|------|------|-----------|
+| S1 | Secrets | Keys, tokens, `.env` committed |
+| S2 | Dependencies | Risky/unpinned/abandoned (high level) |
+| S3 | Auth surfaces | Login, tokens, sessions |
+| S4 | Access control | IDs in URLs, admin, roles |
+| S5 | Input edges | SQL/shell/HTML/path/parsers |
+| S6 | Config hardening | Debug, CORS, defaults |
+| S7 | Error/leakage | Stacks to client, PII in logs |
+| S8 | Code quality risks | TODO security, ignored errors |
+| S9 | Supply/CI | Install scripts, wide perms, unpinned actions |
+| S10 | Privacy | PII fields, third-party sends |
 
-| Pass ID | Name | Looks for |
-|---------|------|-----------|
-| S1 | Secrets | API keys, tokens, private keys, `.env` committed |
-| S2 | Dependencies | Known risky patterns, pinned/unpinned, abandoned libs (high level) |
-| S3 | Auth surfaces | Login, tokens, session flags, password flows |
-| S4 | Access control | IDs in URLs, admin routes, role checks |
-| S5 | Input edges | Parsers, SQL/raw query, shell, HTML, file paths |
-| S6 | Config hardening | Debug left on, permissive CORS, directory listing, default creds |
-| S7 | Error/leakage | Stack traces to clients, verbose errors, PII in logs |
-| S8 | Code quality risks | Huge functions, `TODO security`, panic/unwrap abuse, ignored errors |
-| S9 | Supply/CI | Install scripts, wide permissions, unpinned actions (if present) |
-| S10 | Privacy | PII fields, retention, third-party sends |
-
-**Output of step:** selected passes list.
+**Output:** selected passes
 
 ### Step 3 — Run passes
+- Method · hits · clean · limits
 
-For each selected pass:
-
-- Method (what you inspected)
-- Hits (file/area + brief note)
-- Clean (explicitly say clean if nothing found)
-- Limits (what you could not see)
-
-**Output of step:** per-pass results.
+**Output:** per-pass results
 
 ### Step 4 — Normalize findings
+| ID | Pass | Severity (Crit/High/Med/Low/Info) | Location | Issue | Fix |
 
-| ID | Pass | Severity | Location | Issue | Recommended fix |
-
-Severity: Critical / High / Medium / Low / Info
-
-**Output of step:** normalized table.
+**Output:** table
 
 ### Step 5 — Coverage report
+*(Balanced+)*
+- What was inspected · blind spots · hand-off skills
 
-- % of inventory actually inspected
-- Blind spots (binaries, missing lockfiles, unreachable private code)
-- Suggested follow-up skills (Cyber Security, Issues Founder, Coding)
+**Output:** coverage + hand-off
 
-**Output of step:** coverage + hand-off.
+---
+
+## Max extensions
+
+### M1 — Surface matrix
+Entry × auth level × data sensitivity.
+
+### M2 — Severity rubric used
+Why each severity; consistent rules.
+
+### M3 — False-positive log
+Reviewed-and-dismissed hits + why.
+
+### M4 — Re-scan plan
+What to re-check after fixes; CI gates to add.
+
+### M5 — Pass scorecard
+| Pass | Status | Hits | Notes |
 
 ---
 
@@ -102,12 +124,12 @@ Severity: Critical / High / Medium / Low / Info
 
 ```markdown
 ## Scanning result
+**Effort:** Fast | Balanced | Max
 
 ### Inventory summary
 ...
 
 ### Passes run
-- S1 ... 
 - ...
 
 ### Findings
@@ -120,6 +142,12 @@ Severity: Critical / High / Medium / Low / Info
 ### Blind spots
 - ...
 
+### Max only
+#### Surface matrix
+...
+#### Re-scan plan
+...
+
 ### Next actions
 1.
 2.
@@ -130,15 +158,15 @@ Severity: Critical / High / Medium / Low / Info
 
 ## Quality bar
 
-- [ ] Inventory before opinions
-- [ ] Explicit clean passes (not only bad news)
-- [ ] Locations specific enough to act
+- [ ] Effort announced
+- [ ] Pass count meets effort
+- [ ] Locations actionable
 - [ ] No offensive payloads
 
 ---
 
 ## Anti-patterns
 
-- Random nits called a “scan”
-- Only style issues under a security banner
-- Claiming CVE confirmation without evidence
+- Random nits called a scan
+- Claiming CVE proof without evidence
+- Skipping inventory on Max

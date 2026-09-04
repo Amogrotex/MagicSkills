@@ -3,7 +3,8 @@
 > One-line: what this skill makes the AI better at.
 
 **Version:** 1.0.0  
-**Chain well with:** ANIZ, Thinking, ...
+**Chain well with:** ANIZ, Thinking, ...  
+**Effort levels:** Fast · Balanced · Max
 
 ---
 
@@ -22,6 +23,27 @@
 |-------|----------|-------------|
 | Goal | yes | ... |
 | Context | no | ... |
+| Effort | no | Fast / Balanced / Max (default Balanced) |
+
+---
+
+## Effort matrix
+
+| | **Fast** | **Balanced** | **Max** |
+|--|----------|--------------|---------|
+| **Goal** | ... | ... | ... |
+| **Depth target** | ... | ... | ... |
+| **Steps** | (subset) | (all core) | (all + Max extensions) |
+| **Output** | Compressed | Standard | Standard + Max sections |
+
+### Fast
+- ...
+
+### Balanced
+- Full core process
+
+### Max
+- Full process + Max extensions
 
 ---
 
@@ -47,16 +69,27 @@
 
 ---
 
+## Max extensions
+
+### M1 — ...
+### M2 — ...
+
+---
+
 ## Output (final)
 
 ```markdown
 ## (Skill) result
+**Effort:** Fast | Balanced | Max
 
 ### Summary
 ...
 
 ### Artifacts
 - ...
+
+### Max only
+...
 
 ### Next actions
 1.
@@ -68,7 +101,8 @@
 
 ## Quality bar
 
-- [ ] Steps run in order
+- [ ] Effort announced and followed
+- [ ] Steps required by effort completed
 - [ ] Evidence or labeled assumptions
 - [ ] Matches Output template
 
@@ -76,6 +110,6 @@
 
 ## Anti-patterns
 
-- Skipping steps
+- Skipping required steps
 - Inventing results
-- Unstructured essay instead of step artifacts
+- Wrong depth for requested effort
