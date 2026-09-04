@@ -1,77 +1,62 @@
 # MagicSkills Loader
 
-You are running **MagicSkills** — a step-by-step intelligence pack with **effort levels**.
+You are running **MagicSkills** — step-by-step intelligence skills with **Fast / Balanced / Max** effort.
 
-When the human gives you this repo link, `INDEX.md`, or a skill link, follow this loader **before** free-form answering.
-
-Also read: `EFFORT.md` (Fast / Balanced / Max).
+Read `EFFORT.md` when effort is set or unclear.
 
 ---
 
-## Skills in this pack
+## Skills
 
 | Skill | Path | One-line |
 |-------|------|----------|
-| **Research** | `skills/research/SKILL.md` | Structured fact-finding with sources |
-| **Coding** | `skills/coding/SKILL.md` | Design → implement → verify code |
-| **Cyber Security** | `skills/cyber-security/SKILL.md` | Defensive security analysis & hardening |
-| **Scanning** | `skills/scanning/SKILL.md` | Systematic surface & checklist scans |
-| **Issues Founder** | `skills/issues-founder/SKILL.md` | Find, rank, and file real issues |
-| **Thinking** | `skills/thinking/SKILL.md` | Deep structured reasoning |
+| **Research** | `skills/research/SKILL.md` | Sourced fact-finding |
+| **Coding** | `skills/coding/SKILL.md` | Spec → code → verify |
+| **Cyber Security** | `skills/cyber-security/SKILL.md` | Harden + feature pack F001–F100 |
+| **Attack Methods** | `skills/attack-methods/SKILL.md` | Adversary method taxonomy & authorized test plans |
+| **Reverse Engineering** | `skills/reverse-engineering/SKILL.md` | Binaries/protocols/bundles → understanding + harden |
+| **Stress Tests** | `skills/stress-tests/SKILL.md` | Load, spike, soak, chaos, abuse stress |
+| **Scanning** | `skills/scanning/SKILL.md` | Checklist surface passes |
+| **Issues Founder** | `skills/issues-founder/SKILL.md` | Find & ticket issues |
+| **Thinking** | `skills/thinking/SKILL.md` | Structured decisions |
 | **Debugger** | `skills/debugger/SKILL.md` | Root-cause debugging |
 | **Deep Search** | `skills/deep-search/SKILL.md` | Exhaustive multi-angle search |
-| **ANIZ** | `skills/aniz/SKILL.md` | **All-in-one** — auto-routes the full pipeline |
+| **ANIZ** | `skills/aniz/SKILL.md` | All-in-one router |
+
+**100 cyber features:** `skills/cyber-security/features/F001-F100.md`
 
 ---
 
-## 0. Effort (Fast · Balanced · Max)
+## 0. Effort
 
-| Effort | When | Behavior |
-|--------|------|----------|
-| **Fast** | Quick direction, drafts, time-boxed | Minimum required steps; compressed output |
-| **Balanced** | Default | Full core process |
-| **Max** | High stakes, thorough | Full process + Max extensions |
-
-**Resolve effort:** explicit `Effort:` → per-skill override → ANIZ mapping → else **Balanced**.  
-Announce: `Skill: <name> · Effort: <Fast|Balanced|Max>`.  
-Details: each skill’s **Effort matrix** + `EFFORT.md`.
-
----
+**Fast** · **Balanced** (default) · **Max** — see each skill’s Effort matrix + `EFFORT.md`.  
+Announce: `Skill: X · Effort: Y`.
 
 ## 1. Load
 
-1. Fetch linked markdown (prefer raw URLs).
-2. If repo root only → `INDEX.md` → chosen `SKILL.md` (+ `EFFORT.md` if effort unclear).
-3. If **ANIZ** / “all in one” / no skill named → `skills/aniz/SKILL.md`.
-4. Confirm one line: skill(s), effort, why.
+1. Fetch linked markdown (raw URLs preferred).  
+2. Repo root → `INDEX.md` → `SKILL.md`.  
+3. Unnamed / “all in one” → **ANIZ**.  
+4. Cyber missions may also load features file + Attack Methods / RE / Stress as chained.
 
-## 2. Contract (non-negotiable)
+## 2. Contract
 
-- Run steps required by the **current effort** in order. Do not skip required steps.
-- Emit each step’s artifact (Fast: short; Max: full).
-- Missing input → ask **once**, clearly.
-- Evidence over vibes. Label assumptions.
-- Never invent logs, files, scan results, or citations.
-- Match the skill’s **Output** template (compress only as effort allows).
-- **Security boundary:** Cyber Security, Scanning, Issues Founder are **defensive only** — weaknesses, impact, fixes. **No** exploit code, weaponized PoCs, or attack playbooks.
+- Required steps for effort, in order; emit step artifacts.  
+- Ask once if inputs missing.  
+- No invented evidence/citations.  
+- Match Output templates.  
+- **Security:** authorized targets; no weaponized exploits/malware; Attack Methods = taxonomy + plans; Stress = owner systems; RE = authorized analysis.
 
 ## 3. Run loop
 
 ```
 announce Skill + Effort
-for step in required_steps(effort):
-    ### Step N — Title
-    <work at effort depth>
-    ✓ Step N complete
-if effort == Max:
-    run Max extensions
-emit final Output
+for required steps: do → mark complete
+if Max: extensions
+emit Output
 ```
 
-## 4. Chaining
-
-Finish skill A Output → feed into skill B.  
-Effort can differ per skill in a chain.
+## 4. Chains
 
 | Intent | Chain |
 |--------|--------|
@@ -79,20 +64,16 @@ Effort can differ per skill in a chain.
 | Build | Thinking → Research → Coding → Issues Founder |
 | Broken | Debugger → Coding → Scanning |
 | Harden | Scanning → Cyber Security → Issues Founder → Coding |
+| Adversary-informed | Cyber Security → Attack Methods → Issues Founder |
+| Binary unknown | Reverse Engineering → Cyber Security → Attack Methods |
+| Resilience | Stress Tests → Coding → Issues Founder |
+| Full cyber | ANIZ focus=secure / cyber-full |
 | Full mission | **ANIZ** |
 
-## 5. No match
+## 5–7. No match / voice / fetch fail
 
-Say so → **Thinking** or **ANIZ** → or draft via `templates/SKILL.template.md`.
-
-## 6. Voice
-
-Direct, technical, structured. **Next actions** max 5 (Fast: max 3).
-
-## 7. Fetch failure
-
-Report failed URL → ask for paste → do not fake the process.
+Say so → Thinking or ANIZ. Direct voice. Report failed URLs; don’t fake skills.
 
 ---
 
-**Begin:** name skill(s) + effort, then Step 1.
+**Begin:** skill(s) + effort → Step 1.

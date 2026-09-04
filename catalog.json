@@ -1,98 +1,37 @@
 {
   "name": "magicskills",
-  "version": "3.0.0",
-  "description": "Link-loadable step-by-step AI skills with Fast/Balanced/Max effort: Research, Coding, Cyber Security, Scanning, Issues Founder, Thinking, Debugger, Deep Search, ANIZ.",
+  "version": "4.0.0",
+  "description": "AI skills with Fast/Balanced/Max effort: Research, Coding, Cyber Security (100 features), Attack Methods, Reverse Engineering, Stress Tests, Scanning, Issues Founder, Thinking, Debugger, Deep Search, ANIZ.",
   "loader": "LOADER.md",
   "effort": "EFFORT.md",
   "index": "INDEX.md",
   "defaultSkill": "aniz",
   "defaultEffort": "balanced",
+  "featurePack": "skills/cyber-security/features/F001-F100.md",
   "efforts": [
-    {
-      "id": "fast",
-      "aliases": ["fast", "quick", "low"],
-      "summary": "Minimum viable steps; compressed output; speed over depth"
-    },
-    {
-      "id": "balanced",
-      "aliases": ["balanced", "normal", "default", "medium", "full"],
-      "summary": "Full core process; solid default quality"
-    },
-    {
-      "id": "max",
-      "aliases": ["max", "deep", "high", "thorough", "exhaustive"],
-      "summary": "Full process plus extensions; highest rigor"
-    }
+    {"id": "fast", "aliases": ["fast", "quick", "low"]},
+    {"id": "balanced", "aliases": ["balanced", "normal", "default", "medium", "full"]},
+    {"id": "max", "aliases": ["max", "deep", "high", "thorough", "exhaustive"]}
   ],
   "skills": [
-    {
-      "id": "aniz",
-      "path": "skills/aniz/SKILL.md",
-      "title": "ANIZ — All in one",
-      "triggers": ["aniz", "all in one", "full pipeline", "end to end", "do everything"]
-    },
-    {
-      "id": "research",
-      "path": "skills/research/SKILL.md",
-      "title": "Research",
-      "triggers": ["research", "compare", "best way", "what is", "sources"]
-    },
-    {
-      "id": "coding",
-      "path": "skills/coding/SKILL.md",
-      "title": "Coding",
-      "triggers": ["code", "implement", "build", "feature", "program", "write code"]
-    },
-    {
-      "id": "cyber-security",
-      "path": "skills/cyber-security/SKILL.md",
-      "title": "Cyber Security",
-      "triggers": ["security", "cyber", "vulnerability", "harden", "owasp", "auth", "secure"]
-    },
-    {
-      "id": "scanning",
-      "path": "skills/scanning/SKILL.md",
-      "title": "Scanning",
-      "triggers": ["scan", "scanning", "checklist", "audit pass", "inventory"]
-    },
-    {
-      "id": "issues-founder",
-      "path": "skills/issues-founder/SKILL.md",
-      "title": "Issues Founder",
-      "triggers": ["issues founder", "find issues", "find bugs", "triage", "tickets"]
-    },
-    {
-      "id": "thinking",
-      "path": "skills/thinking/SKILL.md",
-      "title": "Thinking",
-      "triggers": ["think", "thinking", "reason", "decide", "tradeoff"]
-    },
-    {
-      "id": "debugger",
-      "path": "skills/debugger/SKILL.md",
-      "title": "Debugger",
-      "triggers": ["debug", "debugger", "bug", "error", "crash", "broken", "stack trace"]
-    },
-    {
-      "id": "deep-search",
-      "path": "skills/deep-search/SKILL.md",
-      "title": "Deep Search",
-      "triggers": ["deep search", "dig", "exhaustive", "leave no stone", "obscure"]
-    }
+    {"id": "aniz", "path": "skills/aniz/SKILL.md", "title": "ANIZ — All in one", "triggers": ["aniz", "all in one", "full pipeline"]},
+    {"id": "research", "path": "skills/research/SKILL.md", "title": "Research", "triggers": ["research", "compare", "sources"]},
+    {"id": "coding", "path": "skills/coding/SKILL.md", "title": "Coding", "triggers": ["code", "implement", "build"]},
+    {"id": "cyber-security", "path": "skills/cyber-security/SKILL.md", "title": "Cyber Security", "triggers": ["security", "cyber", "harden", "owasp", "secure"]},
+    {"id": "attack-methods", "path": "skills/attack-methods/SKILL.md", "title": "Attack Methods", "triggers": ["attack methods", "kill chain", "att&ck", "purple team", "how would this be attacked", "adversary"]},
+    {"id": "reverse-engineering", "path": "skills/reverse-engineering/SKILL.md", "title": "Reverse Engineering", "triggers": ["reverse engineering", "reverse", "binary", "decompile", "protocol reverse", "disassemble"]},
+    {"id": "stress-tests", "path": "skills/stress-tests/SKILL.md", "title": "Stress Tests", "triggers": ["stress", "load test", "soak", "chaos", "capacity", "spike test"]},
+    {"id": "scanning", "path": "skills/scanning/SKILL.md", "title": "Scanning", "triggers": ["scan", "scanning", "checklist"]},
+    {"id": "issues-founder", "path": "skills/issues-founder/SKILL.md", "title": "Issues Founder", "triggers": ["issues founder", "find issues", "triage"]},
+    {"id": "thinking", "path": "skills/thinking/SKILL.md", "title": "Thinking", "triggers": ["think", "decide", "tradeoff"]},
+    {"id": "debugger", "path": "skills/debugger/SKILL.md", "title": "Debugger", "triggers": ["debug", "bug", "error", "crash"]},
+    {"id": "deep-search", "path": "skills/deep-search/SKILL.md", "title": "Deep Search", "triggers": ["deep search", "dig", "exhaustive"]}
   ],
   "chains": {
-    "aniz": ["aniz"],
-    "learn_fast": ["research"],
-    "learn_balanced": ["research", "thinking"],
-    "learn_max": ["deep-search", "research", "thinking"],
-    "build_fast": ["thinking", "coding"],
-    "build_balanced": ["thinking", "research", "coding", "issues-founder"],
-    "build_max": ["thinking", "research", "coding", "scanning", "issues-founder"],
-    "fix_fast": ["debugger", "coding"],
-    "fix_balanced": ["debugger", "coding", "issues-founder"],
-    "fix_max": ["debugger", "coding", "scanning", "issues-founder"],
-    "audit_fast": ["scanning", "issues-founder"],
-    "audit_balanced": ["scanning", "cyber-security", "issues-founder"],
-    "audit_max": ["scanning", "cyber-security", "issues-founder", "coding"]
+    "secure": ["scanning", "cyber-security", "issues-founder"],
+    "cyber-full": ["scanning", "cyber-security", "attack-methods", "stress-tests", "issues-founder"],
+    "re": ["reverse-engineering", "cyber-security", "attack-methods"],
+    "adversary": ["cyber-security", "attack-methods", "issues-founder"],
+    "stress": ["stress-tests", "coding", "issues-founder"]
   }
 }

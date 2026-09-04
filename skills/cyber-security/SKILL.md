@@ -1,31 +1,32 @@
 # Skill: Cyber Security
 
-> Defensive security analysis — threats, weaknesses, impact, and hardening guidance.
+> Defensive + adversary-informed security analysis — threats, method classes, weaknesses, hardening, detection. Pairs with Attack Methods, Reverse Engineering, Stress Tests.
 
-**Version:** 3.0.0  
-**Chain well with:** Scanning, Issues Founder, Coding, Thinking, ANIZ  
-**Effort levels:** Fast · Balanced · Max
+**Version:** 4.0.0  
+**Chain well with:** Attack Methods, Reverse Engineering, Stress Tests, Scanning, Issues Founder, Coding, Thinking, ANIZ  
+**Effort levels:** Fast · Balanced · Max  
+**Feature catalog:** `features/F001-F100.md` (100 features)
 
 ---
 
-## Mandate (hard rules — all efforts)
+## Mandate
 
-**Defensive only.**
-
-- **Do:** weaknesses, impact, fixes, secure defaults, detection ideas, safe verification.
-- **Do not:** exploits, weaponized PoCs, bypass kits, attack playbooks.
-- If asked to attack: refuse that part; offer hardening + safe checks.
-- Prefer fixes on systems the owner controls.
+- Default: **harden owner systems** with optional **attacker-method framing** (classes, paths, ATT&CK) — not weaponized exploits.
+- **Do:** weaknesses, impact, fixes, secure defaults, detection, authorized test plans, RE/stress handoffs.
+- **Do not:** exploit code, malware, bypass kits, or attack third-party systems without authorization.
+- Attack *thinking* is allowed as taxonomy + purple-team planning via **Attack Methods** skill / F076–F085.
+- Prefer fixes and detections the owner can apply.
 
 ---
 
 ## When to use
 
-- “Is this secure?”, threat model, auth/session design
-- Hardening apps/APIs/configs (high level)
-- Vulnerability *classes* in code (OWASP-style)
+- “Is this secure?”, threat model, harden, auth design  
+- Adversary-informed review (how it could be abused — classes)  
+- Drive the **100-feature** checklist  
+- Gate before Stress Tests / RE / Attack Methods deep dives  
 
-**Do not use when:** offensive tooling requested, or pure functional bug (→ Debugger).
+**Do not use when:** pure load test only (→ Stress Tests), pure binary RE (→ Reverse Engineering), or exploit writing requested (refuse payloads).
 
 ---
 
@@ -33,11 +34,14 @@
 
 | Input | Required | Description |
 |-------|----------|-------------|
-| Target | yes | App, API, design, snippet |
+| Target | yes | App, API, design, snippet, arch |
 | Trust boundaries | no | Users, roles, networks |
 | Stack | no | Language, framework, host |
 | Sensitivity | no | PII, payments, secrets |
+| Profile | no | web-app, api, cloud, auth-heavy, mobile-backend, llm-app, binary/RE, full-max |
+| Features | no | Explicit Fxxx list; else profile defaults |
 | Effort | no | Fast / Balanced / Max |
+| Adversary depth | no | off / light / full (full → also run Attack Methods) |
 
 ---
 
@@ -45,82 +49,82 @@
 
 | | **Fast** | **Balanced** | **Max** |
 |--|----------|--------------|---------|
-| **Goal** | Top risks + fixes | Solid threat + findings | Deep defensive review |
-| **Threats** | 2–3 | Full sketch | Actors × assets matrix |
-| **Findings depth** | P0/P1 only | P0–P2 | P0–P2 + systematic classes |
-| **Steps** | 1, 3, 5 | 1–6 | 1–6 + Max extensions |
-| **Verification** | Fix direction | Safe test ideas | Test + detect + review plan |
-
-### Fast
-- Boundaries skim → top weaknesses → priority fixes
-
-### Balanced
-- Full core defensive process
-
-### Max
-- Full process + STRIDE-ish pass, abuse cases, control gaps, residual risk register
+| **Goal** | Top risks + fixes | Solid threat + findings | Deep review + feature sweep |
+| **Features** | 5–10 | 15–30 | 40+ / profile full |
+| **Threats** | 2–3 | Full sketch | Actors × assets + paths |
+| **Steps** | 1, 3, 5, 7 | 1–8 | 1–8 + Max extensions |
+| **Adversary** | light optional | light | full handoff Attack Methods |
 
 ---
 
 ## Process
 
-### Step 1 — Asset & boundary map
-- Protect what · trust boundaries · AuthN/AuthZ as understood  
-*(Fast: short bullet map)*
+### Step 1 — Scope, profile, features
+- Target · ROE if any · profile  
+- Load feature IDs from `features/F001-F100.md` (profile pack or explicit)  
+- Announce Effort + profile + feature count  
 
-**Output:** assets + boundaries
+**Output:** scope · profile · feature ID list
 
-### Step 2 — Threat sketch
-*(Balanced+)*
-- Actors · goal classes · bad outcomes  
-*(Not exploit steps)*
+### Step 2 — Asset, data, boundary map
+- Assets · data class (F004) · boundaries · AuthN/Z model (F006–F007)  
 
-**Output:** threat list
+**Output:** maps
 
-### Step 3 — Weakness hunt (classes)
-As applicable: broken auth/session, access control, injection classes, SSRF/path/deser, secrets, CSRF/CORS, crypto misuse, supply chain, misconfig/IAM, uploads.
+### Step 3 — Threat sketch (+ optional methods)
+- Actors · goals · bad outcomes  
+- If adversary depth light/full: note top method classes (or hand off Attack Methods)  
 
-Each finding: location, class, impact, likelihood L/M/H.
+**Output:** threats · method hints
 
-**Output:** findings draft
+### Step 4 — Feature-driven weakness hunt
+- Run selected F-features (especially C–F groups)  
+- Classes: access control, injection, SSRF, secrets, auth, misconfig, supply chain, cloud, etc.  
+- Each finding: location, class, impact, likelihood, feature ID  
 
-### Step 4 — Impact & priority
-*(Balanced+; Fast: rank top 3)*
-| ID | Class | Impact | Likelihood | P0–P2 | Fix direction |
+**Output:** findings draft + feature run log
+
+### Step 5 — Impact & priority
+| ID | Feature | Class | Impact | Likelihood | P0–P2 | Fix |
+
+**Severity:** P0 auth bypass / mass PII / payment fraud path / RCE class · P1 priv gap / secret in repo / weak reset · P2 headers / verbose errors · Info defense-in-depth  
 
 **Output:** prioritized table
 
-### Step 5 — Hardening plan
-- Concrete remediations
-- Safe verification (tests/config checks — **not** exploit scripts)
-- Detection/logging where useful
+### Step 6 — Hardening + secure defaults
+- Concrete remediations  
+- Stack defaults when known (`patterns/` if present)  
+- Prevent / detect / respond for P0–P1  
 
-**Output:** ordered remediations
+**Output:** hardening plan
 
-### Step 6 — Residual risk
-*(Balanced+)*
-- Accepted remains · deeper review needs · monitoring
+### Step 7 — Safe verification
+- AuthZ matrix tests · negative auth · config asserts · secret scan of diff  
+- Link Stress Tests for abuse/load (F093–F100)  
+- Link RE if binary/protocol unknown (F086–F092)  
 
-**Output:** residual risk
+**Output:** verification plan
+
+### Step 8 — Residual risk + handoffs
+- Accepted risk · blind spots (F010)  
+- Next skills: Attack Methods, RE, Stress Tests, Issues Founder, Coding, Scanning  
+
+**Output:** residual · handoffs
 
 ---
 
 ## Max extensions
 
-### M1 — STRIDE-style pass
-Spoofing, Tampering, Repudiation, Info disclosure, DoS, Elevation — notes per boundary (descriptive).
-
-### M2 — Abuse cases
-Misuse stories as **defender** narratives (“abusive user attempts X”) + control that should stop it.
-
-### M3 — Control catalog
-Prevent / detect / respond for each P0–P1.
-
-### M4 — Secure design alternatives
-Safer pattern vs current; migration difficulty.
-
-### M5 — Review checklist export
-Paste-ready checklist for future changes in this area.
+### M1 — STRIDE per boundary (F012)  
+### M2 — Abuse-case → control matrix (F015)  
+### M3 — ATT&CK map of findings (F068) via Attack Methods  
+### M4 — Secrets lifecycle (F046–F047)  
+### M5 — Supply chain & CI (F051–F054)  
+### M6 — Cloud/K8s pack (F056–F061)  
+### M7 — Detection use-cases (F066–F067)  
+### M8 — IR stubs (F070)  
+### M9 — Fix PR security gate checklist  
+### M10 — Full F001–F100 scorecard export  
 
 ---
 
@@ -129,6 +133,8 @@ Paste-ready checklist for future changes in this area.
 ```markdown
 ## Cyber Security result
 **Effort:** Fast | Balanced | Max
+**Profile:** ...
+**Features:** n selected · n done · n n/a
 
 ### Scope
 ...
@@ -136,9 +142,13 @@ Paste-ready checklist for future changes in this area.
 ### Threat sketch
 - ...
 
+### Feature run log
+| ID | Status | Notes |
+|----|--------|-------|
+
 ### Findings
-| ID | Priority | Class | Where | Impact | Remediation |
-|----|----------|-------|-------|--------|-------------|
+| ID | Pri | Feature | Class | Where | Impact | Remediation |
+|----|-----|---------|-------|-------|--------|-------------|
 
 ### Hardening plan
 1.
@@ -148,13 +158,17 @@ Paste-ready checklist for future changes in this area.
 ### Safe verification
 - ...
 
-### Residual risk
+### Residual risk & blind spots
 - ...
 
+### Handoffs
+- Attack Methods: ...
+- Reverse Engineering: ...
+- Stress Tests: ...
+- Issues Founder / Coding: ...
+
 ### Max only
-#### STRIDE notes
-...
-#### Control catalog
+#### Scorecard / ATT&CK / STRIDE
 ...
 
 ### Next actions
@@ -167,15 +181,16 @@ Paste-ready checklist for future changes in this area.
 
 ## Quality bar
 
-- [ ] Effort announced
-- [ ] Actionable defensive fixes
-- [ ] Priorities match impact
-- [ ] Zero exploit/PoC material
+- [ ] Effort + profile announced  
+- [ ] Feature IDs used (not vague “checked security”)  
+- [ ] Actionable fixes  
+- [ ] No exploit/malware payloads  
 
 ---
 
 ## Anti-patterns
 
-- Scare list, no fixes
-- Attack recipes “for education” when asked to break things
-- Max theater without findings
+- Scare list, no fixes  
+- Claiming 100/100 features done in Fast  
+- Attack recipes for third parties  
+- Ignoring handoffs to Stress/RE/Methods when needed  

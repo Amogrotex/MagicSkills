@@ -1,100 +1,50 @@
-# How to prompt MagicSkills (with effort)
+# Prompts — v4 cyber pack
 
-## ANIZ + effort
-
+## Full cyber ANIZ
 ```
-Follow https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/LOADER.md
-Effort guide: https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/EFFORT.md
-Run ANIZ: https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/aniz/SKILL.md
-
-Mission: Build a small URL shortener API in Node, then file issues.
-Effort: Balanced
-```
-
-### Fast mission
-```
-ANIZ · Effort: Fast
-Mission: Sketch how to add OAuth login to our app.
-```
-
-### Max mission
-```
-ANIZ · Effort: Max
-Mission: Harden checkout + rate limits; full issue pack.
-Focus: secure
-```
-
-## Single skill + effort
-
-### Thinking Fast
-```
-https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/thinking/SKILL.md
-Effort: Fast
-Should we monorepo or polyrepo?
-```
-
-### Research Max
-```
-https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/research/SKILL.md
+LOADER: https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/LOADER.md
+ANIZ: https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/aniz/SKILL.md
+Focus: cyber-full
 Effort: Max
-Compare Postgres vs SQLite for single-node SaaS MVP <10k users.
+Mission: Review our API auth and rate limits; map attack methods; plan stress tests; file issues.
 ```
 
-### Coding Balanced (default)
-```
-https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/coding/SKILL.md
-Goal: POST /shorten → { code, url }
-Stack: Express + TypeScript
-```
-
-### Debugger Max
-```
-https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/debugger/SKILL.md
-Effort: Max
-Symptom: 500 on checkout when coupon applied
-<stack trace>
-```
-
-### Scanning Fast
-```
-https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/scanning/SKILL.md
-Effort: Fast
-Target: <files>
-```
-
-### Cyber Security Balanced
+## 100 features via Cyber Security
 ```
 https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/cyber-security/SKILL.md
-Effort: Balanced
-Target: password-reset email token design
-```
-
-### Issues Founder Max
-```
-https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/issues-founder/SKILL.md
+https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/cyber-security/features/F001-F100.md
+Profile: api
 Effort: Max
-Target: <code or scan>
+Target: <code>
 ```
 
-### Deep Search Balanced
+## Attack Methods
 ```
-https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/deep-search/SKILL.md
+https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/attack-methods/SKILL.md
 Effort: Balanced
-Target: ECONNRESET to Redis on Node 20 in Kubernetes under load
+ROE: We own this app; staging only
+Target: checkout + login architecture
 ```
 
-## Mixed chain
-
+## Reverse Engineering
 ```
-Loader: https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/LOADER.md
-Chain:
-  1. Thinking · Fast
-  2. Research · Max
-  3. Coding · Balanced
-  4. Issues Founder · Fast
-Request: ...
+https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/reverse-engineering/SKILL.md
+Effort: Max
+Permission: owner-authorized
+Target: <file description / hashes / platform>
+Goal: security review + protocol notes
 ```
 
-## If the model drifts
+## Stress Tests
+```
+https://raw.githubusercontent.com/Amogrotex/MagicSkills/main/skills/stress-tests/SKILL.md
+Effort: Balanced
+Target: /login /search /checkout
+SLO: error rate < 1% at 2× peak
+ROE: staging; abort if p99 > 5s
+```
 
-> Resume skill steps at the announced effort. Mark each step complete. Finish with the Output template including **Effort:** line.
+## Chain
+```
+Reverse Engineering (Max) → Cyber Security (Max) → Attack Methods (Balanced) → Stress Tests (Fast) → Issues Founder (Balanced)
+```
