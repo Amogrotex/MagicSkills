@@ -63,4 +63,4 @@ Debugger → Coding → Scanning
 
 ## Version
 
-Pack `4.0.0` — RE + Attack Methods + Stress Tests + 100 features.
+Pack `4.1.0` — RE + Attack Methods + Stress Tests + 100 features.
